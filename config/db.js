@@ -2,19 +2,14 @@ const { Sequelize } = require("sequelize");
 require("dotenv").config();
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASS,
+  process.env.DB_NAME, // Database name
+  process.env.DB_USER, // Database user
+  process.env.DB_PASS, // Database password
   {
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_DIALECT,
-    logging: false, 
+    host: process.env.DB_HOST, // Database host
+    dialect: process.env.DB_DIALECT, // Database dialect (e.g., mysql, postgres)
+    logging: false, // Disable logging for cleaner output
   }
 );
-
-sequelize
-  .authenticate()
-  .then(() => console.log("✅ MySQL Connected"))
-  .catch((err) => console.error("❌ MySQL Connection Error:", err));
 
 module.exports = sequelize;

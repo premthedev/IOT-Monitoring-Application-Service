@@ -10,6 +10,7 @@ const Sensor = require("./models/sensor");
 const Alert = require("./models/alert");
 
 const app = express();
+const path = require('path');
 const PORT = process.env.PORT || 5000;
 
 // Middleware
@@ -20,6 +21,10 @@ app.use(cors({
 }));
 
 // Routes
+app.use(express.static(path.join(__dirname, './public')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
 const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 const alertRoutes = require("./routes/alert");
@@ -33,6 +38,7 @@ app.use("/simulator", simulatorRoutes);
 
 // Create HTTP server and Socket.IO server
 const server = http.createServer(app);
+
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
